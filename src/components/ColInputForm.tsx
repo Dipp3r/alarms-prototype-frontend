@@ -1,3 +1,5 @@
+import axios from "axios";
+
 interface ColInputProps{
     tableName: [string,React.Dispatch<React.SetStateAction<string>>];
     col: [number,React.Dispatch<React.SetStateAction<number>>];
@@ -23,9 +25,37 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
         }
     }
 
-    function handleGenerate(){
+    const migrateTable = async()=>{
+        console.log("migration under process");
+        try {
+            await axios.post("http://localhost:8000/migrate-seed",{
+                collectionName: collectionName,
+                ColNum: colNum,
+                rowNum: rowNum
+            })
+            .then(response=>{
+                if(response.data.status){
+                    setToggleForm(true);
+                }
+            })
+            .catch(err=>{
+                console.log(err.message);
+            });
+            
+        } catch (err) {
+            console.error("Error while migrating the table",err);
+            setToggleForm(false);
+        }
+    };
+
+    async function handleGenerate(){
         console.log(!toggleForm)
         setToggleForm(false);
+        if(rowNum!<50000){
+            setTimeout(()=>migrateTable(),3000);
+        }else{
+            await migrateTable();
+        }
     }
 
     function handleNameChange(value:string){
