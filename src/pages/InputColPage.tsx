@@ -6,13 +6,12 @@ function InputColPage(){
     const [collectionName,setName] = useState<string>('');
     const [rowNum,setRowNum] = useState<number>(1000);
     const [toggleForm,setToggleForm] = useState(true);
-    const [redirectToHome, setRedirectToHome] = useState(false);
     
     return(
         <div id="input-col-page">
             {
                 toggleForm? 
-                    <ColInputForm toHome={[redirectToHome,setRedirectToHome]} col={[colNum,setColNum]} row={[rowNum,setRowNum]} toggle={[toggleForm,setToggleForm]} tableName={[collectionName,setName]}></ColInputForm>
+                    <ColInputForm col={[colNum,setColNum]} row={[rowNum,setRowNum]} toggle={[toggleForm,setToggleForm]} tableName={[collectionName,setName]}></ColInputForm>
                     :
                     <>
                         <div style={{textAlign:"center"}}>

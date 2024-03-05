@@ -6,17 +6,15 @@ interface ColInputProps{
     tableName: [string,React.Dispatch<React.SetStateAction<string>>];
     col: [number,React.Dispatch<React.SetStateAction<number>>];
     toggle: [boolean,React.Dispatch<React.SetStateAction<boolean>>];
-    toHome: [boolean,React.Dispatch<React.SetStateAction<boolean>>];
     row: [number|undefined, React.Dispatch<React.SetStateAction<number>>];
 }
 
-function ColInputForm({col,row,toggle,tableName,toHome}:ColInputProps){
+function ColInputForm({col,row,toggle,tableName}:ColInputProps){
     const NavigateTo = useNavigate();
     const [colNum,setColNum] = col;
     const [rowNum,setRowNum] = row;
     const [collectionName, setName] = tableName;
     const [toggleForm, setToggleForm] = toggle;
-    const [redirectToHome, setRedirectToHome] = toHome;
 
     function handleColNum(value: number){
         setColNum(value);
@@ -39,7 +37,7 @@ function ColInputForm({col,row,toggle,tableName,toHome}:ColInputProps){
             })
             .then(response=>{
                 if(response.data.status){
-                    setRedirectToHome(true);
+                    setToggleForm(true);
                     NavigateTo("/home");
                 }
             })
@@ -66,22 +64,6 @@ function ColInputForm({col,row,toggle,tableName,toHome}:ColInputProps){
     function handleNameChange(value:string){
         setName(value);
     }
-
-    useEffect(()=>{
-       const goToHome = async()=>{
-        try {
-            if(redirectToHome){
-                NavigateTo("/home");
-            }   
-        } catch (error) {
-            console.log(error);
-        }
-       };
-
-       goToHome();
-
-       return ()=>{};
-    },[redirectToHome,NavigateTo]);
 
     return(
         <>
