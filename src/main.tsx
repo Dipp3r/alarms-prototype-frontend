@@ -1,12 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import MainContent from './pages/MainContent.tsx'
 import InputColPage from './pages/InputColPage.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <InputColPage></InputColPage>
-    {/* <MainContent /> */}
+    <BrowserRouter>
+      <Routes>
+        <Route path='/'>
+          <Route index element={<InputColPage/>} />
+          <Route path='home' element={<MainContent/>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
 )

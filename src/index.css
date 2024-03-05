@@ -155,9 +155,10 @@ form input[type="range"]{
   accent-color: rgb(22, 24, 26);
 }
 
-form input[type="text"]{
+#name{
   width: 100%;
 }
+
 
 .float-right{
   float: right;

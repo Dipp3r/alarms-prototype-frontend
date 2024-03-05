@@ -21,7 +21,7 @@ function PageForm(){
             </div>
             <div className="col">
                 <label htmlFor="pages">Pages:</label>
-                <input type="text" name="pages" id="pages" value={pages.join(',')} placeholder="23,24,25" onChange={(e)=>{handlePageChange(e.target.value)}}/>
+                <input type="text" name="pages" id="pages" value={pages.join(',')} placeholder="23,24,25"  onChange={(e)=>{handlePageChange(e.target.value)}}/>
             </div>
         </form>
     )
