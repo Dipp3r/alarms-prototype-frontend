@@ -22,7 +22,7 @@ function MainContent() {
     <>  
       <NavBar pages={pages} pageSize={pageSize} setShowTable={setShowTable}></NavBar>
       <div id="main" style={{alignItems:showTable?'flex-start':'center',top:showTable?'97px':'0'}}>
-        {showTable? <DataTable ></DataTable>:<PageForm pageSize={pageSize} handlePageSize={handlePageSize} pages={pages} handlePageChange={handlePageChange}></PageForm>}
+        {showTable? <DataTable pages={pages} pageSize={pageSize}></DataTable>:<PageForm pageSize={pageSize} handlePageSize={handlePageSize} pages={pages} handlePageChange={handlePageChange}></PageForm>}
         <ResponseMsg></ResponseMsg>
       </div>
     </>

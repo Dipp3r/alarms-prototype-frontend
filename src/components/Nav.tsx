@@ -9,7 +9,6 @@ function NavBar({setShowTable,pages,pageSize}:tableProps){
         setShowTable(true);
         console.log(pages,pageSize);
     }
-
     return(
         <>
             <nav id="navbar">
