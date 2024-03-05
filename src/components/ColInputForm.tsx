@@ -1,17 +1,22 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface ColInputProps{
     tableName: [string,React.Dispatch<React.SetStateAction<string>>];
     col: [number,React.Dispatch<React.SetStateAction<number>>];
     toggle: [boolean,React.Dispatch<React.SetStateAction<boolean>>];
+    toHome: [boolean,React.Dispatch<React.SetStateAction<boolean>>];
     row: [number|undefined, React.Dispatch<React.SetStateAction<number>>];
 }
 
-function ColInputForm({col,row,toggle,tableName}:ColInputProps){
+function ColInputForm({col,row,toggle,tableName,toHome}:ColInputProps){
+    const NavigateTo = useNavigate();
     const [colNum,setColNum] = col;
     const [rowNum,setRowNum] = row;
     const [collectionName, setName] = tableName;
     const [toggleForm, setToggleForm] = toggle;
+    const [redirectToHome, setRedirectToHome] = toHome;
 
     function handleColNum(value: number){
         setColNum(value);
@@ -26,7 +31,6 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
     }
 
     const migrateTable = async()=>{
-        console.log("migration under process");
         try {
             await axios.post("http://localhost:8000/migrate-seed",{
                 collectionName: collectionName,
@@ -35,7 +39,8 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
             })
             .then(response=>{
                 if(response.data.status){
-                    setToggleForm(true);
+                    setRedirectToHome(true);
+                    NavigateTo("/home");
                 }
             })
             .catch(err=>{
@@ -48,11 +53,11 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
         }
     };
 
-    async function handleGenerate(){
-        console.log(!toggleForm)
+    async function handleGenerate(event){
+        event.preventDefault();
         setToggleForm(false);
         if(rowNum!<50000){
-            setTimeout(()=>migrateTable(),3000);
+            setTimeout(()=>migrateTable(),2000);
         }else{
             await migrateTable();
         }
@@ -62,9 +67,25 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
         setName(value);
     }
 
+    useEffect(()=>{
+       const goToHome = async()=>{
+        try {
+            if(redirectToHome){
+                NavigateTo("/home");
+            }   
+        } catch (error) {
+            console.log(error);
+        }
+       };
+
+       goToHome();
+
+       return ()=>{};
+    },[redirectToHome,NavigateTo]);
+
     return(
         <>
-            <form>
+            <form onSubmit={handleGenerate}>
                 <div className="col">
                     <label htmlFor="name">Collection Name:</label>
                     <div className="row"><input type="text" id="name" name="name" placeholder="sampletable1" onChange={(e)=>{handleNameChange(e.target.value)}}/></div>
@@ -77,7 +98,7 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
                     <label htmlFor="rowNum">Number of records:</label>
                     <input type="number" id="rowNum" value={rowNum} placeholder="max 1,00,000" name="rowNum" max="100000" onChange={(e)=>{handleRowNum(parseInt(e.target.value))}}/>
                 </div>
-                <button disabled={!((rowNum !== undefined && rowNum>0) && colNum>0 && (collectionName.length>=2))} className="float-right submit" onClick={handleGenerate}>Generate</button>
+                <button type="submit" disabled={!((rowNum !== undefined && rowNum>0) && colNum>0 && (collectionName.length>=2))} className="float-right submit">Generate</button>
             </form>
         </>
     )

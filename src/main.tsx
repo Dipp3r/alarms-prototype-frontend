@@ -9,10 +9,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='/'>
-          <Route index element={<InputColPage/>} />
-          <Route path='home' element={<MainContent/>} />
-        </Route>
+        <Route  path="/" element={<InputColPage/>} />
+        <Route path="/home" element={<MainContent/>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
