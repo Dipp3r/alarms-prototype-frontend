@@ -1,14 +1,11 @@
 interface tableProps{
     setShowTable: React.Dispatch<React.SetStateAction<boolean>>;
+    handlePopulate: ()=>Promise<void>;
     pages: string[],
     pageSize:number
 }
 
-function NavBar({setShowTable,pages,pageSize}:tableProps){
-    function handlePopulate(){
-        setShowTable(true);
-        console.log(pages,pageSize);
-    }
+function NavBar({setShowTable,handlePopulate,pages,pageSize}:tableProps){
     return(
         <>
             <nav id="navbar">

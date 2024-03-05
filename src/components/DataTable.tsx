@@ -1,11 +1,10 @@
 interface pageProps{
     pages:string[],
     pageSize:number,
+    alarms:object[]
 }
 
-function DataTable({pages,pageSize}:pageProps){
-    
-    const alarms = [{id:1,ActStack:"random",PrirityLevel:3,Severity:800,AlarmState:"ACT",ObjectName:"obj1",Condition:"random",Message:"random",EventTime:"date",ActiveTime:"date"},{id:2,ActStack:"random",PrirityLevel:3,Severity:800,AlarmState:"ACT",ObjectName:"obj1",Condition:"random",Message:"random",EventTime:"date",ActiveTime:"date"},{id:3,ActStack:"random",PrirityLevel:3,Severity:800,AlarmState:"ACT",ObjectName:"obj1",Condition:"random",Message:"random",EventTime:"date",ActiveTime:"date"}];
+function DataTable({pages,pageSize,alarms}:pageProps){
     return(
         <>
             <table>

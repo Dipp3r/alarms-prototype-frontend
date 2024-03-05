@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 interface ColInputProps{
     tableName: [string,React.Dispatch<React.SetStateAction<string>>];
@@ -54,6 +53,7 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
     async function handleGenerate(event){
         event.preventDefault();
         setToggleForm(false);
+        localStorage.setItem("collectionName",collectionName);
         if(rowNum!<50000){
             setTimeout(()=>migrateTable(),2000);
         }else{

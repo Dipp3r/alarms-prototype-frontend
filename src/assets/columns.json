@@ -1,0 +1,79 @@
+[
+    {
+        "id":1,
+        "name":"actState",
+        "description":"Act State"
+    },
+    {
+        "id":2,
+        "name":"prirityLevel",
+        "description":"Pririty Level"
+    },
+    {
+        "id":3,
+        "name":"severity",
+        "description":"Severity"
+    },
+    {
+        "id":4,
+        "name":"alarmState",
+        "description":"Alarm State"
+    },
+    {
+        "id":5,
+        "name":"objectName",
+        "description":"Object Name"
+    },
+    {
+        "id":6,
+        "name":"condition",
+        "description":"Condition"
+    },
+    {
+        "id":7,
+        "name":"message",
+        "description":"Message"
+    },
+    {
+        "id":8,
+        "name":"eventTime",
+        "description":"Event Time"
+    },
+    {
+        "id":9,
+        "name":"activeTime",
+        "description":"Active Time"
+    },
+    {
+        "id":10,
+        "name":"updatedAt",
+        "description":"Active Time"
+    },
+    {
+        "id":11,
+        "name":"createdAt",
+        "description":"Active Time"
+    },
+    {
+        "id":12,
+        "name":"description",
+        "description":"Active Time"
+    },
+    {
+        "id":13,
+        "name":"signal",
+        "description":"Active Time"
+    },
+    {
+        "id":14,
+        "name":"model",
+        "description":"Active Time"
+    },
+    {
+        "id":15,
+        "name":"type",
+        "description":"Type"
+    }
+]
+
+      
