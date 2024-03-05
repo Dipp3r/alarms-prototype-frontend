@@ -1,14 +1,21 @@
 interface tableProps{
     setShowTable: React.Dispatch<React.SetStateAction<boolean>>;
+    pages: string[],
+    pageSize:number
 }
 
-function NavBar({setShowTable}:tableProps){
+function NavBar({setShowTable,pages,pageSize}:tableProps){
+    function handlePopulate(){
+        setShowTable(true);
+        console.log(pages,pageSize);
+    }
+
     return(
         <>
             <nav id="navbar">
                 <h1>ABB</h1>
                 <div id="options">
-                    <button onClick={()=>{setShowTable(true)}}>
+                    <button onClick={handlePopulate}>
                         Populate
                     </button>
                     <button onClick={()=>{setShowTable(false)}}>

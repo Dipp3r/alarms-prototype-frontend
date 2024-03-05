@@ -1,18 +1,14 @@
 import { useState } from "react";
 
-function PageForm(){
-    const [pageSize, setPageSize] = useState(0);
-    const [pages, setPages] = useState<string[]>([]);
-    function handlePageSize(value:number){
-        setPageSize(value);
-    }
+interface pageProps{
+    pages: string,
+    pageSize: number,
+    handlePageSize: React.Dispatch<React.SetStateAction<number>>,
+    handlePageChange: React.Dispatch<React.SetStateAction<string>>
+}
 
-    function handlePageChange(value:string){
-        const pages:string[] = value.split(',');
-        setPages(pages);
-    }
-
-
+function PageForm({pages,pageSize,handlePageSize,handlePageChange}:pageProps){
+    
     return(
         <form>
             <div className="col" style={{marginBottom:"20px"}}>
