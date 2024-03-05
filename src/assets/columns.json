@@ -47,27 +47,27 @@
     {
         "id":10,
         "name":"updatedAt",
-        "description":"Active Time"
+        "description":"Updated At"
     },
     {
         "id":11,
         "name":"createdAt",
-        "description":"Active Time"
+        "description":"Created At"
     },
     {
         "id":12,
         "name":"description",
-        "description":"Active Time"
+        "description":"Description"
     },
     {
         "id":13,
         "name":"signal",
-        "description":"Active Time"
+        "description":"Signal"
     },
     {
         "id":14,
         "name":"model",
-        "description":"Active Time"
+        "description":"Model"
     },
     {
         "id":15,

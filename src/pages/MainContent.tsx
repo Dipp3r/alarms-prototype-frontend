@@ -41,7 +41,6 @@ function MainContent() {
   };
 
   async function handlePopulate(){
-    console.log("populate clicked!",pages,pageSize);
     await populate();
     setShowTable(true);
   }

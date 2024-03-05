@@ -6,7 +6,7 @@ interface pageProps{
 }
 
 function DataTable({pages,pageSize,alarms}:pageProps){
-    const alarmsList = alarms[parseInt(pages[0])];
+    const alarmsList = Object.values(alarms[parseInt(pages[0])]);
     const alarm_keys = Object.keys(alarmsList[0]);
     return(
         <>
