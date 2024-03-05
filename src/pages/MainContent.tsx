@@ -30,7 +30,6 @@ function MainContent() {
         collectionName:collectionName
       })
       .then((response)=>{
-        console.log(response.data)
         setAlarms(response.data);
       })
       .catch((err)=>{

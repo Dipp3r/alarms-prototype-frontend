@@ -55,7 +55,7 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
         setToggleForm(false);
         localStorage.setItem("collectionName",collectionName);
         if(rowNum!<50000){
-            setTimeout(()=>migrateTable(),2000);
+            setTimeout(()=>migrateTable(),1500);
         }else{
             await migrateTable();
         }
