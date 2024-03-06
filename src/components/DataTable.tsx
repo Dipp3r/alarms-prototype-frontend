@@ -1,11 +1,10 @@
 import columns  from "../assets/columns.json";
 interface pageProps{
     pages:string[],
-    pageSize:number,
     alarms:object[]
 }
 
-function DataTable({pages,pageSize,alarms}:pageProps){
+function DataTable({pages,alarms}:pageProps){
     const alarmsList = Object.values(alarms[parseInt(pages[0])]);
     const alarm_keys = Object.keys(alarmsList[0]);
     return(
