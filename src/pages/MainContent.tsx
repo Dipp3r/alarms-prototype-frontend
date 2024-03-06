@@ -214,8 +214,8 @@ function MainContent() {
       <NavBar handleUpdate={handleUpdate} handleDelete={handleDelete} handleAdd={handleAdd} setShowTable={setShowTable} handlePopulate={handlePopulate}></NavBar>
       <div id="main" style={{alignItems:showTable?'flex-start':'center',top:showTable?'97px':'0'}}>
         <div className='col'>
-        {showTable? <DataTable alarms={alarms} pages={pages}></DataTable>:<PageForm handlePageSize={handlePageSize} pages={pages} handlePageChange={handlePageChange}></PageForm>}
-          <p style={{margin:"10px",color:"red"}}>{error}</p>
+          {showTable? <DataTable alarms={alarms} pages={pages}></DataTable>:<PageForm handlePageSize={handlePageSize} pages={pages} handlePageChange={handlePageChange}></PageForm>}
+          <p style={{margin:"20px",color:"red", width:"200px"}}>{error}</p>
         </div>
         <ResponseMsg newId={newId} operation={operation} animation={animation} ></ResponseMsg>
       </div>
