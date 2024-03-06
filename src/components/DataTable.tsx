@@ -5,8 +5,14 @@ interface pageProps{
 }
 
 function DataTable({pages,alarms}:pageProps){
-    const alarmsList = Object.values(alarms[parseInt(pages[0])]);
-    const alarm_keys = Object.keys(alarmsList[0]);
+    let alarm_keys:string[] = [];
+    let alarmsList:string[] = [];
+    try {
+        alarmsList = Object.values(alarms[parseInt(pages[0])]);
+        alarm_keys = Object.keys(alarmsList[0]);
+    } catch (error) {
+        console.log(error);
+    }
     return(
         <>
             <table>

@@ -7,6 +7,7 @@ import {faker} from "@faker-js/faker";
 import axios from 'axios';
 
 function MainContent() {
+  const [error,setError] = useState("")
   const [newId, setNewId] = useState("");
   const [operation, setOperation] = useState("");
   const [animation,setAnimation] = useState(false);
@@ -29,7 +30,6 @@ function MainContent() {
   const pageList = pages.filter((page)=>(page.length>0));
   const populate = async()=>{
     try {
-      console.log(attributes.sort(()=>Math.random()-0.5).slice(0,1));
       await axios.post("http://localhost:8000/alarms",{
         sortOrder:attributes.sort(()=>Math.random()-0.5).slice(0,1),
         pageSize:pageSize,
@@ -37,7 +37,21 @@ function MainContent() {
         collectionName:collectionName
       })
       .then((response)=>{
-        setAlarms(response.data);
+        let flag = false;
+        Object.values(response.data).forEach((element)=>{
+          if(element.length>0){
+            flag = true;
+          }
+        });
+        console.log();
+        if(flag){
+          console.log(response.data)
+          setAlarms(response.data);
+          setShowTable(true);
+          setError("");
+        }else{
+          setError("* The page count either exceeded or the fields have been left empty");
+        }
       })
       .catch((err)=>{
         console.log(err);
@@ -49,7 +63,6 @@ function MainContent() {
 
   const addAlarm = async(body:object)=>{
     try {
-      console.log(attributes);
       await axios.post("http://localhost:8000/addalarm",
         {
           attributes:body,
@@ -115,15 +128,18 @@ function MainContent() {
   }
 
   async function handlePopulate(){
+    console.log(pages,pageSize);
     await populate();
-    setShowTable(true);
   }
 
   function enableAnimation(){
+    setPageSize(0);
+    setPages([]);
+    setError("");
     setAnimation(true);
     setTimeout(async()=>{
         setAnimation(false);
-    },5200);
+    },4400);
   }
 
   async function handleAdd(){
@@ -197,7 +213,10 @@ function MainContent() {
     <>  
       <NavBar handleUpdate={handleUpdate} handleDelete={handleDelete} handleAdd={handleAdd} setShowTable={setShowTable} handlePopulate={handlePopulate}></NavBar>
       <div id="main" style={{alignItems:showTable?'flex-start':'center',top:showTable?'97px':'0'}}>
+        <div className='col'>
         {showTable? <DataTable alarms={alarms} pages={pages}></DataTable>:<PageForm handlePageSize={handlePageSize} pages={pages} handlePageChange={handlePageChange}></PageForm>}
+          <p style={{margin:"10px",color:"red"}}>{error}</p>
+        </div>
         <ResponseMsg newId={newId} operation={operation} animation={animation} ></ResponseMsg>
       </div>
     </>

@@ -200,7 +200,7 @@ form input[type="range"]{
 
 .animate-card{
   transition: all;
-  animation: jiggle-disappear 5s linear 1;
+  animation: jiggle-disappear 4.2s linear 1;
 }
 
 

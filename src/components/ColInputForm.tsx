@@ -78,9 +78,9 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
                 </div>
                 <div className="col">
                     <label htmlFor="rowNum">Number of records:</label>
-                    <input type="number" id="rowNum" value={rowNum} placeholder="max 1,00,000" name="rowNum" max="100000" onChange={(e)=>{handleRowNum(parseInt(e.target.value))}} required/>
+                    <input type="number" id="rowNum" min={1} value={rowNum} placeholder="max 1,00,000" name="rowNum" max="100000" onChange={(e)=>{handleRowNum(parseInt(e.target.value))}} required/>
                 </div>
-                <button type="submit" disabled={!((rowNum !== undefined && rowNum>0) && colNum>0 && (collectionName.length>=2))} className="float-right submit">Generate</button>
+                <button type="submit"  className="float-right submit">Generate</button>
             </form>
         </>
     )
