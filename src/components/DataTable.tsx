@@ -28,9 +28,9 @@ function DataTable({pages,alarms}:pageProps){
                         return(
                             <tr key={alarm._id}>
                                 {
-                                    record_keys.map((key)=>{
+                                    record_keys.map((key,index)=>{
                                         return(
-                                            <td>{alarm[key]}</td>
+                                            <td key={alarm._id+index}>{alarm[key]}</td>
                                         )
                                     })
                                 }

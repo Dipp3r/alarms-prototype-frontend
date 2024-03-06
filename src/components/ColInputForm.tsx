@@ -70,15 +70,15 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
             <form onSubmit={handleGenerate}>
                 <div className="col">
                     <label htmlFor="name">Collection Name:</label>
-                    <div className="row"><input type="text" id="name" name="name" placeholder="sampletable1" onChange={(e)=>{handleNameChange(e.target.value)}}/></div>
+                    <div className="row"><input type="text" id="name" name="name" placeholder="sampletable1" onChange={(e)=>{handleNameChange(e.target.value)}} required/></div>
                 </div>
                 <div className="col">
                     <label htmlFor="colNum">Number of columns (between 1 and 15):</label>
-                    <div className="row"><p>{colNum}</p><input type="range" value={colNum} id="colNum" name="colNum" min="1" max="15" onChange={(e)=>{handleColNum(parseInt(e.target.value))}}/></div>
+                    <div className="row"><p>{colNum}</p><input type="range" value={colNum} id="colNum" name="colNum" min="1" max="15" onChange={(e)=>{handleColNum(parseInt(e.target.value))}} required/></div>
                 </div>
                 <div className="col">
                     <label htmlFor="rowNum">Number of records:</label>
-                    <input type="number" id="rowNum" value={rowNum} placeholder="max 1,00,000" name="rowNum" max="100000" onChange={(e)=>{handleRowNum(parseInt(e.target.value))}}/>
+                    <input type="number" id="rowNum" value={rowNum} placeholder="max 1,00,000" name="rowNum" max="100000" onChange={(e)=>{handleRowNum(parseInt(e.target.value))}} required/>
                 </div>
                 <button type="submit" disabled={!((rowNum !== undefined && rowNum>0) && colNum>0 && (collectionName.length>=2))} className="float-right submit">Generate</button>
             </form>

@@ -1,11 +1,12 @@
 interface tableProps{
     setShowTable: React.Dispatch<React.SetStateAction<boolean>>;
-    setAnimation: React.Dispatch<React.SetStateAction<boolean>>;
     handlePopulate: ()=>Promise<void>;
     handleAdd: ()=>Promise<void>;
+    handleUpdate: ()=>Promise<void>;
+    handleDelete: ()=>Promise<void>;
 }
 
-function NavBar({setAnimation,setShowTable,handlePopulate,handleAdd}:tableProps){
+function NavBar({handleDelete,handleUpdate,handlePopulate,handleAdd}:tableProps){
     return(
         <>
             <nav id="navbar">
@@ -19,10 +20,10 @@ function NavBar({setAnimation,setShowTable,handlePopulate,handleAdd}:tableProps)
                     }}>
                         Add
                     </button>
-                    <button onClick={()=>{setShowTable(false)}}>
+                    <button onClick={handleUpdate}>
                         Update 
                     </button>
-                    <button onClick={()=>{setShowTable(false)}}>
+                    <button onClick={handleDelete}>
                         Delete 
                     </button>
                 </div>

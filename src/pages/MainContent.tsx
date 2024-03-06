@@ -7,6 +7,7 @@ import {faker} from "@faker-js/faker";
 import axios from 'axios';
 
 function MainContent() {
+  const [newId, setNewId] = useState("");
   const [operation, setOperation] = useState("");
   const [animation,setAnimation] = useState(false);
   const [attributes,setAttributes] = useState([]);
@@ -28,7 +29,9 @@ function MainContent() {
   const pageList = pages.filter((page)=>(page.length>0));
   const populate = async()=>{
     try {
+      console.log(attributes.sort(()=>Math.random()-0.5).slice(0,1));
       await axios.post("http://localhost:8000/alarms",{
+        sortOrder:attributes.sort(()=>Math.random()-0.5).slice(0,1),
         pageSize:pageSize,
         pages:pageList,
         collectionName:collectionName
@@ -46,6 +49,7 @@ function MainContent() {
 
   const addAlarm = async(body:object)=>{
     try {
+      console.log(attributes);
       await axios.post("http://localhost:8000/addalarm",
         {
           attributes:body,
@@ -53,7 +57,54 @@ function MainContent() {
         }
       )
       .then(response=>{
-        console.log(response.data);
+        if(response.data.status){
+          setNewId(response.data.id);
+          enableAnimation();
+        }
+      })
+      .catch(error=>{
+        console.log(error.msg);
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const updateAlarm = async(body:object)=>{
+    try {
+      await axios.put("http://localhost:8000/updatealarm",
+        {
+          attributes:body,
+          collectionName:collectionName
+        }
+      )
+      .then(response=>{
+        if(response.data.status){
+          setNewId(response.data.id);
+          enableAnimation();
+
+        }
+      })
+      .catch(error=>{
+        console.log(error.msg);
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const deleteAlarm = async()=>{
+    try {
+      await axios.post("http://localhost:8000/deletealarm",
+        {
+          collectionName:collectionName
+        }
+      )
+      .then(response=>{
+        if(response.data.status){
+          setNewId(response.data.id);
+          enableAnimation();
+        }
       })
       .catch(error=>{
         console.log(error.msg);
@@ -68,14 +119,17 @@ function MainContent() {
     setShowTable(true);
   }
 
-  async function handleAdd(){
-    // await addAlarm();
-    setOperation("Add");
-    setShowTable(false);
+  function enableAnimation(){
     setAnimation(true);
     setTimeout(async()=>{
         setAnimation(false);
-    },2200);
+    },5200);
+  }
+
+  async function handleAdd(){
+    // await addAlarm();
+    setOperation("Add");
+    setShowTable(false);  
     const newRecord = {}
     attributes.map((field)=>{
       if(["priorityLevel","severity"].includes(field)){
@@ -88,6 +142,32 @@ function MainContent() {
     });
     console.log(newRecord);
     await addAlarm(newRecord);
+  }
+
+  async function handleUpdate(){
+    // await addAlarm();
+    setOperation("Update");
+    setShowTable(false);
+    const newRecord = {}
+    attributes.map((field)=>{
+      if(["priorityLevel","severity"].includes(field)){
+        newRecord[field] = faker.number.int({min:100,max:1000});
+      } else if(["eventTime","activeTime","createdAt","updatedAt"].includes(field)){
+        newRecord[field] = faker.date.past();
+      }else{
+        newRecord[field] = faker.lorem.sentence(1);
+      }
+    });
+    console.log(newRecord);
+    await updateAlarm(newRecord);
+    
+  }
+
+  async function handleDelete(){
+    // await addAlarm();
+    setOperation("Delete");
+    setShowTable(false);
+    await deleteAlarm();
     
   }
 
@@ -115,10 +195,10 @@ function MainContent() {
 
   return (
     <>  
-      <NavBar setAnimation={setAnimation} handleAdd={handleAdd} setShowTable={setShowTable} handlePopulate={handlePopulate}></NavBar>
+      <NavBar handleUpdate={handleUpdate} handleDelete={handleDelete} handleAdd={handleAdd} setShowTable={setShowTable} handlePopulate={handlePopulate}></NavBar>
       <div id="main" style={{alignItems:showTable?'flex-start':'center',top:showTable?'97px':'0'}}>
-        {showTable? <DataTable alarms={alarms} pages={pages}></DataTable>:<PageForm pageSize={pageSize} handlePageSize={handlePageSize} pages={pages} handlePageChange={handlePageChange}></PageForm>}
-        <ResponseMsg operation={operation} animation={animation} ></ResponseMsg>
+        {showTable? <DataTable alarms={alarms} pages={pages}></DataTable>:<PageForm handlePageSize={handlePageSize} pages={pages} handlePageChange={handlePageChange}></PageForm>}
+        <ResponseMsg newId={newId} operation={operation} animation={animation} ></ResponseMsg>
       </div>
     </>
   )
