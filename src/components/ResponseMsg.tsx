@@ -1,10 +1,15 @@
 import tick from "../assets/tick-box.svg";
 
-function ResponseMsg(){
+interface resProps{
+    animation: boolean,
+    operation: string
+}
+
+function ResponseMsg({animation, operation}:resProps){
     return(
-        <div className="row msg-card">
+        <div className={animation? "row msg-card animate-card":"row msg-card"}>
             <img src={tick} alt="tick" height={20}/>
-            <p> Operation executed sucessfully</p>
+            <p>{operation} operation executed sucessfully</p>
         </div>
     )
 }

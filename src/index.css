@@ -189,21 +189,41 @@ form input[type="range"]{
 }
 
 .msg-card{
+  opacity: 0;
   padding:5px 10px;
   border-radius: 5px;
   border: 0.5px solid black;
   position:absolute;
   bottom: 20px;
   right: 20px;
-  animation: disappear 3s linear 1;
 }
 
-@keyframes disappear {
-  100%{opacity: 0};
-  75%{opacity: 0.25};
-  50%{opacity: 0.5};
-  25%{};
-  0%{};
+.animate-card{
+  transition: all;
+  animation: jiggle-disappear 2s linear 1;
+}
+
+
+@keyframes jiggle-disappear {
+  100%{
+    transform: translateY(0px);
+    opacity: 0;
+  }
+  75%{
+    transform: translateY(10px);
+    opacity: 0.5;
+  }
+  50%{
+    transform: translateY(-10px);
+    opacity: 0.8;
+  }
+  25%{
+    transform: translateY(-10px);
+  }
+  0%{
+    transform: translateY(0px);
+    opacity:1;
+  }
 }
 
 .msg-card p{

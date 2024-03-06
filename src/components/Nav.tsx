@@ -1,11 +1,11 @@
 interface tableProps{
     setShowTable: React.Dispatch<React.SetStateAction<boolean>>;
+    setAnimation: React.Dispatch<React.SetStateAction<boolean>>;
     handlePopulate: ()=>Promise<void>;
-    pages: string[],
-    pageSize:number
+    handleAdd: ()=>Promise<void>;
 }
 
-function NavBar({setShowTable,handlePopulate,pages,pageSize}:tableProps){
+function NavBar({setAnimation,setShowTable,handlePopulate,handleAdd}:tableProps){
     return(
         <>
             <nav id="navbar">
@@ -14,7 +14,9 @@ function NavBar({setShowTable,handlePopulate,pages,pageSize}:tableProps){
                     <button onClick={handlePopulate}>
                         Populate
                     </button>
-                    <button onClick={()=>{setShowTable(false)}}>
+                    <button onClick={()=>{
+                        handleAdd();
+                    }}>
                         Add
                     </button>
                     <button onClick={()=>{setShowTable(false)}}>
