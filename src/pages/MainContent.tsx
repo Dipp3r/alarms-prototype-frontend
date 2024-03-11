@@ -5,8 +5,10 @@ import PageForm from '../components/PaginateForm';
 import ResponseMsg from '../components/ResponseMsg';
 import {faker} from "@faker-js/faker";
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 function MainContent() {
+  const location = useLocation();
   const [error,setError] = useState("")
   const [newId, setNewId] = useState("");
   const [operation, setOperation] = useState("");
@@ -38,14 +40,12 @@ function MainContent() {
       })
       .then((response)=>{
         let flag = false;
-        Object.values(response.data).forEach((element)=>{
+        Object.values(response.data).forEach((element: ob)=>{
           if(element.length>0){
             flag = true;
           }
         });
-        console.log();
         if(flag){
-          console.log(response.data)
           setAlarms(response.data);
           setShowTable(true);
           setError("");
@@ -128,7 +128,6 @@ function MainContent() {
   }
 
   async function handlePopulate(){
-    console.log(pages,pageSize);
     await populate();
   }
 
@@ -146,7 +145,7 @@ function MainContent() {
     // await addAlarm();
     setOperation("Add");
     setShowTable(false);  
-    const newRecord = {}
+    const newRecord = {};
     attributes.map((field)=>{
       if(["priorityLevel","severity"].includes(field)){
         newRecord[field] = faker.number.int({min:100,max:1000});
@@ -156,7 +155,6 @@ function MainContent() {
         newRecord[field] = faker.lorem.sentence(1);
       }
     });
-    console.log(newRecord);
     await addAlarm(newRecord);
   }
 
@@ -188,8 +186,7 @@ function MainContent() {
   }
 
   useEffect(()=>{
-    setCollectionName(localStorage.getItem("collectionName")!);
-    
+    setCollectionName(location.state);    
     const getColumns = async()=>{
       try {
         await axios.post("http://localhost:8000/get-field-names",{
@@ -207,14 +204,14 @@ function MainContent() {
     };
     getColumns();
 
-  },[collectionName,animation]);
+  },[collectionName,animation,location.state]);
 
   return (
     <>  
       <NavBar handleUpdate={handleUpdate} handleDelete={handleDelete} handleAdd={handleAdd} setShowTable={setShowTable} handlePopulate={handlePopulate}></NavBar>
       <div id="main" style={{alignItems:showTable?'flex-start':'center',top:showTable?'97px':'0'}}>
         <div className='col'>
-          {showTable? <DataTable alarms={alarms} pages={pages}></DataTable>:<PageForm handlePageSize={handlePageSize} pages={pages} handlePageChange={handlePageChange}></PageForm>}
+          {showTable? <DataTable attributes={attributes} alarms={alarms} pages={pages}></DataTable>:<PageForm handlePageSize={handlePageSize} pages={pages} handlePageChange={handlePageChange}></PageForm>}
           <p style={{margin:"20px",color:"red", width:"200px"}}>{error}</p>
         </div>
         <ResponseMsg newId={newId} operation={operation} animation={animation} ></ResponseMsg>

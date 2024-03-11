@@ -1,15 +1,14 @@
 import columns  from "../assets/columns.json";
 interface pageProps{
     pages:string[],
-    alarms:object[]
+    alarms:object[],
+    attributes: string[]
 }
 
-function DataTable({pages,alarms}:pageProps){
-    let alarm_keys:string[] = [];
+function DataTable({pages, alarms, attributes}:pageProps){
     let alarmsList:string[] = [];
     try {
         alarmsList = Object.values(alarms[parseInt(pages[0])]);
-        alarm_keys = Object.keys(alarmsList[0]);
     } catch (error) {
         console.log(error);
     }
@@ -18,7 +17,7 @@ function DataTable({pages,alarms}:pageProps){
             <table>
                 <thead>
                     <tr>
-                        {alarm_keys.map((key)=>{
+                        {attributes.map((key)=>{
                             const col = columns.filter((e)=>e["name"]===key);
                             if(col.length>0){
                                 return(
@@ -30,11 +29,10 @@ function DataTable({pages,alarms}:pageProps){
                 </thead>
                 <tbody>
                     {alarmsList.map((alarm)=>{
-                        const record_keys = Object.keys(alarm).filter((e)=>e!='_id');
                         return(
-                            <tr key={alarm._id}>
+                            <tr key={alarm['_id'].toString()}>
                                 {
-                                    record_keys.map((key,index)=>{
+                                    attributes.map((key,index)=>{
                                         return(
                                             <td key={alarm._id+index}>{alarm[key]}</td>
                                         )

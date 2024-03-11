@@ -37,7 +37,7 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
             .then(response=>{
                 if(response.data.status){
                     setToggleForm(true);
-                    NavigateTo("/home");
+                    NavigateTo("/home", {state:collectionName});
                 }
             })
             .catch(err=>{
@@ -53,7 +53,6 @@ function ColInputForm({col,row,toggle,tableName}:ColInputProps){
     async function handleGenerate(event){
         event.preventDefault();
         setToggleForm(false);
-        localStorage.setItem("collectionName",collectionName);
         if(rowNum!<50000){
             setTimeout(()=>migrateTable(),1500);
         }else{
